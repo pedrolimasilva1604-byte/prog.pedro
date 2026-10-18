@@ -9,104 +9,226 @@ Os exercicios do Bloco 3 devolvem DOIS valores: o resultado e a contagem.
 # ---------- Bloco 1: listas e percurso ----------
 
 def conta_negativos(lista):
-    """Quantos numeros da lista sao menores que zero."""
-    pass
+    qtd = 0
+    for num in lista:
+        if num < 0:
+            qtd += 1
+    return qtd
 
 
 def media(lista):
-    """Media dos numeros. Lista vazia devolve 0."""
-    pass
+    if len(lista) == 0:
+        return 0
+    soma = 0
+    for num in lista:
+        soma += num
+    return soma / len(lista)
 
 
 def sem_o_maior(lista):
-    """Lista NOVA sem o maior valor. Se o maior repete, tira so o primeiro."""
-    pass
+    if len(lista) == 0:
+        return []
+    
+    maior = lista[0]
+    idx_maior = 0
+    i = 1
+    while i < len(lista):
+        if lista[i] > maior:
+            maior = lista[i]
+            idx_maior = i
+        i += 1
+        
+    resultado = []
+    i = 0
+    while i < len(lista):
+        if i != idx_maior:
+            resultado.append(lista[i])
+        i += 1
+    return resultado
 
 
 def acumulada(lista):
-    """Lista NOVA onde cada posicao e a soma de tudo ate ali.
-    acumulada([1, 2, 3]) -> [1, 3, 6]"""
-    pass
+    resultado = []
+    soma = 0
+    for num in lista:
+        soma += num
+        resultado.append(soma)
+    return resultado
 
 
 def achata(lista_de_listas):
-    """(Desafio) Junta as sublistas numa lista so.
-    achata([[1, 2], [3]]) -> [1, 2, 3]"""
-    pass
+    resultado = []
+    for sublista in lista_de_listas:
+        for item in sublista:
+            resultado.append(item)
+    return resultado
 
 
 # ---------- Bloco 2: busca ----------
 
 def busca_ultima(lista, alvo):
-    """ULTIMA posicao do alvo, ou -1."""
-    pass
+    pos = -1
+    i = 0
+    while i < len(lista):
+        if lista[i] == alvo:
+            pos = i
+        i += 1
+    return pos
 
 
 def conta_ocorrencias(lista, alvo):
-    """Quantas vezes o alvo aparece."""
-    pass
+    qtd = 0
+    for item in lista:
+        if item == alvo:
+            qtd += 1
+    return qtd
 
 
 def primeiro_maior_que(lista, limite):
-    """Posicao do primeiro elemento maior que limite, ou -1."""
-    pass
+    i = 0
+    while i < len(lista):
+        if lista[i] > limite:
+            return i
+        i += 1
+    return -1
 
 
 def busca_binaria_primeira(lista, alvo):
-    """(Desafio) Lista JA ORDENADA, o alvo pode repetir.
-    Devolve a PRIMEIRA posicao do alvo, ou -1. Sem percorrer tudo."""
-    pass
+    inicio = 0
+    fim = len(lista) - 1
+    res = -1
+    
+    while inicio <= fim:
+        meio = (inicio + fim) // 2
+        if lista[meio] == alvo:
+            res = meio
+            fim = meio - 1
+        elif lista[meio] < alvo:
+            inicio = meio + 1
+        else:
+            fim = meio - 1
+            
+    return res
 
 
 # ---------- Bloco 3: custo ----------
 
 def soma_pares_contando(lista):
-    """(soma_dos_pares, operacoes). Conte 1 por elemento examinado."""
-    pass
+    soma = 0
+    operacoes = 0
+    for num in lista:
+        operacoes += 1
+        if num % 2 == 0:
+            soma += num
+    return (soma, operacoes)
 
 
 def maior_contando(lista):
-    """(maior, comparacoes). Lista nao vazia.
-    Conte 1 comparacao por elemento a partir do segundo."""
-    pass
+    maior = lista[0]
+    comparacoes = 0
+    i = 1
+    while i < len(lista):
+        comparacoes += 1
+        if lista[i] > maior:
+            maior = lista[i]
+        i += 1
+    return (maior, comparacoes)
 
 
 def tem_soma_contando(lista, alvo):
-    """(True/False, comparacoes). Existem dois elementos que somam alvo?
-    Conte 1 por par comparado. Pare assim que achar."""
-    pass
+    comparacoes = 0
+    i = 0
+    n = len(lista)
+    while i < n:
+        j = i + 1
+        while j < n:
+            comparacoes += 1
+            if lista[i] + lista[j] == alvo:
+                return (True, comparacoes)
+            j += 1
+        i += 1
+    return (False, comparacoes)
 
 
 def ordenada_contando(lista):
-    """(Desafio) (True/False, comparacoes). A lista esta em ordem crescente?
-    Conte 1 por par de vizinhos comparado. Pare no primeiro fora de ordem."""
-    pass
+    comparacoes = 0
+    i = 0
+    while i < len(lista) - 1:
+        comparacoes += 1
+        if lista[i] > lista[i + 1]:
+            return (False, comparacoes)
+        i += 1
+    return (True, comparacoes)
 
 
 # ---------- Bloco 4: padroes ----------
 
 def inverte_no_lugar(lista):
-    """Inverte a PROPRIA lista recebida. NAO cria lista nova e NAO devolve nada."""
-    pass
+    inicio = 0
+    fim = len(lista) - 1
+    while inicio < fim:
+        troca = lista[inicio]
+        lista[inicio] = lista[fim]
+        lista[fim] = troca
+        inicio += 1
+        fim -= 1
 
 
 def eh_palindromo(lista):
-    """True se a lista e igual lida de tras para frente."""
-    pass
+    inicio = 0
+    fim = len(lista) - 1
+    while inicio < fim:
+        if lista[inicio] != lista[fim]:
+            return False
+        inicio += 1
+        fim -= 1
+    return True
 
 
 def par_que_soma(lista, alvo):
-    """Lista JA ORDENADA. Devolve (i, j) das posicoes cujos valores somam alvo,
-    ou (-1, -1). Sem laco dentro de laco."""
-    pass
+    inicio = 0
+    fim = len(lista) - 1
+    while inicio < fim:
+        soma = lista[inicio] + lista[fim]
+        if soma == alvo:
+            return (inicio, fim)
+        elif soma < alvo:
+            inicio += 1
+        else:
+            fim -= 1
+    return (-1, -1)
 
 
 def soma_maxima_janela(lista, k):
-    """Maior soma de k elementos seguidos.
-    soma_maxima_janela([1, 2, 3, 4], 2) -> 7"""
-    pass
+    if len(lista) < k or k == 0:
+        return 0
+    
+    soma_atual = 0
+    i = 0
+    while i < k:
+        soma_atual += lista[i]
+        i += 1
+        
+    maior_soma = soma_atual
+    i = k
+    while i < len(lista):
+        soma_atual = soma_atual + lista[i] - lista[i - k]
+        if soma_atual > maior_soma:
+            maior_soma = soma_atual
+        i += 1
+        
+    return maior_soma
 
 
 def parenteses_balanceados(texto):
-    """(Desafio) True se os ( ) e [ ] do texto abrem e fecham na ordem certa."""
-    pass
+    pilha = []
+    for char in texto:
+        if char == '(' or char == '[':
+            pilha.append(char)
+        elif char == ')':
+            if len(pilha) == 0 or pilha.pop() != '(':
+                return False
+        elif char == ']':
+            if len(pilha) == 0 or pilha.pop() != '[':
+                return False
+    return len(pilha) == 0
